@@ -25,6 +25,10 @@ inputs:
     description: 'The version of pipectl command. Release versions: https://github.com/pipe-cd/pipecd/releases'
     required: false
     default: 'v0.41.3'
+  insecure:
+    description: 'Nothing'
+    required: false
+    default: 'true'
 runs:
   using: 'composite'
   steps:
@@ -66,12 +70,14 @@ runs:
             --address=${{ inputs.api-address }} \
             --api-key=${{ inputs.api-key }} \
             --name=${{ inputs.event-name }} \
-            --data=${{ inputs.data }}
+            --data=${{ inputs.data }} \
+            --insecure=${{ inputs.insecure }}
         else
           ${PIPECTL} event register \
             --address=${{ inputs.api-address }} \
             --api-key=${{ inputs.api-key }} \
             --name=${{ inputs.event-name }} \
             --data=${{ inputs.data }} \
-            --labels=${{ inputs.labels }}
+            --labels=${{ inputs.labels }} \
+            --insecure=${{ inputs.insecure }}
         fi
